@@ -29,10 +29,10 @@ This project uses a monorepo structure:
 
 **Purpose**: Project initialization and verification - ensure development environment is ready
 
-- [ ] T001 Verify Node.js v16+ and npm v7+ installed
-- [ ] T002 Verify all dependencies installed with npm install at repository root
-- [ ] T003 [P] Verify existing test suite passes with npm test
-- [ ] T004 [P] Checkout feature branch 001-overdue-todos
+- [X] T001 Verify Node.js v16+ and npm v7+ installed
+- [X] T002 Verify all dependencies installed with npm install at repository root
+- [X] T003 [P] Verify existing test suite passes with npm test
+- [X] T004 [P] Checkout feature branch 001-overdue-todos
 
 **Checkpoint**: Development environment ready
 
@@ -44,13 +44,13 @@ This project uses a monorepo structure:
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T005 Create packages/frontend/src/utils/dateUtils.js with isOverdue() function
-- [ ] T006 Create packages/frontend/src/utils/__tests__/dateUtils.test.js with comprehensive test cases
-- [ ] T007 Run unit tests for dateUtils.js and verify 100% code coverage
-- [ ] T008 Add overdue color variables to packages/frontend/src/styles/theme.css for light mode
-- [ ] T009 Add overdue color variables to packages/frontend/src/styles/theme.css for dark mode
-- [ ] T010 [P] Add .overdue CSS class with multi-layered indicators to packages/frontend/src/App.css
-- [ ] T011 Verify WCAG AA contrast ratios meet 4.5:1 requirement using WebAIM Contrast Checker
+- [X] T005 Create packages/frontend/src/utils/dateUtils.js with isOverdue() function
+- [X] T006 Create packages/frontend/src/utils/__tests__/dateUtils.test.js with comprehensive test cases
+- [X] T007 Run unit tests for dateUtils.js and verify 100% code coverage
+- [X] T008 Add overdue color variables to packages/frontend/src/styles/theme.css for light mode
+- [X] T009 Add overdue color variables to packages/frontend/src/styles/theme.css for dark mode
+- [X] T010 [P] Add .overdue CSS class with multi-layered indicators to packages/frontend/src/App.css
+- [X] T011 Verify WCAG AA contrast ratios meet 4.5:1 requirement using WebAIM Contrast Checker
 
 **Checkpoint**: Foundation ready - user story implementation can now begin
 
@@ -64,17 +64,17 @@ This project uses a monorepo structure:
 
 ### Implementation for User Story 1
 
-- [ ] T012 [P] [US1] Import isOverdue utility into packages/frontend/src/components/TodoCard.js
-- [ ] T013 [US1] Add overdue computation logic in packages/frontend/src/components/TodoCard.js using isOverdue(todo.dueDate, todo.completed)
-- [ ] T014 [US1] Apply conditional .overdue className to todo card in packages/frontend/src/components/TodoCard.js
-- [ ] T015 [P] [US1] Update packages/frontend/src/components/__tests__/TodoCard.test.js with overdue visual indicator tests
-- [ ] T016 [US1] Verify overdue todos display red text color in browser in light mode
-- [ ] T017 [US1] Verify overdue todos display warning icon before due date in browser
-- [ ] T018 [US1] Verify overdue todos display left border in browser in light mode
-- [ ] T019 [US1] Verify completed todos with past due dates do NOT show overdue indicator in browser
-- [ ] T020 [US1] Verify todos without due dates do NOT show overdue indicator in browser
-- [ ] T021 [US1] Test dark mode overdue visual indicators in browser
-- [ ] T022 [US1] Run full test suite and verify no regressions with npm test
+- [X] T012 [P] [US1] Import isOverdue utility into packages/frontend/src/components/TodoCard.js
+- [X] T013 [US1] Add overdue computation logic in packages/frontend/src/components/TodoCard.js using isOverdue(todo.dueDate, todo.completed)
+- [X] T014 [US1] Apply conditional .overdue className to todo card in packages/frontend/src/components/TodoCard.js
+- [X] T015 [P] [US1] Update packages/frontend/src/components/__tests__/TodoCard.test.js with overdue visual indicator tests
+- [X] T016 [US1] Verify overdue todos display red text color in browser in light mode
+- [X] T017 [US1] Verify overdue todos display warning icon before due date in browser
+- [X] T018 [US1] Verify overdue todos display left border in browser in light mode
+- [X] T019 [US1] Verify completed todos with past due dates do NOT show overdue indicator in browser
+- [X] T020 [US1] Verify todos without due dates do NOT show overdue indicator in browser
+- [X] T021 [US1] Test dark mode overdue visual indicators in browser
+- [X] T022 [US1] Run full test suite and verify no regressions with npm test
 
 **Checkpoint**: At this point, User Story 1 should be fully functional - todos with past due dates display overdue indicators, completed todos do not
 
@@ -88,12 +88,12 @@ This project uses a monorepo structure:
 
 ### Implementation for User Story 2
 
-- [ ] T023 [US2] Verify TodoCard re-renders when completion status changes in packages/frontend/src/components/TodoCard.js
-- [ ] T024 [P] [US2] Add test case to packages/frontend/src/components/__tests__/TodoCard.test.js for completing overdue todo
-- [ ] T025 [P] [US2] Add test case to packages/frontend/src/components/__tests__/TodoCard.test.js for un-completing overdue todo
-- [ ] T026 [US2] Manual test - Create overdue todo in browser and mark complete and verify indicator disappears
-- [ ] T027 [US2] Manual test - Unmark completed overdue todo and verify indicator reappears
-- [ ] T028 [US2] Run full test suite and verify no regressions with npm test
+- [X] T023 [US2] Verify TodoCard re-renders when completion status changes in packages/frontend/src/components/TodoCard.js
+- [X] T024 [P] [US2] Add test case to packages/frontend/src/components/__tests__/TodoCard.test.js for completing overdue todo
+- [X] T025 [P] [US2] Add test case to packages/frontend/src/components/__tests__/TodoCard.test.js for un-completing overdue todo
+- [X] T026 [US2] Manual test - Create overdue todo in browser and mark complete and verify indicator disappears
+- [X] T027 [US2] Manual test - Unmark completed overdue todo and verify indicator reappears
+- [X] T028 [US2] Run full test suite and verify no regressions with npm test
 
 **Checkpoint**: At this point, User Stories 1 AND 2 should both work - overdue status updates dynamically when completion status changes
 
@@ -109,12 +109,12 @@ This project uses a monorepo structure:
 
 ### Implementation for User Story 3
 
-- [ ] T029 [US3] Verify newly created todo with past due date shows overdue indicator immediately in packages/frontend/src/components/TodoList.js
-- [ ] T030 [P] [US3] Add test case to packages/frontend/src/components/__tests__/TodoList.test.js for new overdue todo creation
-- [ ] T031 [US3] Manual test - Create new todo with yesterday's date in browser and verify overdue indicator appears immediately
-- [ ] T032 [US3] Manual test - Edit existing todo's due date to yesterday and verify overdue indicator appears
-- [ ] T033 [US3] Run full test suite and verify no regressions with npm test
-- [ ] T034 [US3] Document future enhancement for midnight auto-detection in README or docs
+- [X] T029 [US3] Verify newly created todo with past due date shows overdue indicator immediately in packages/frontend/src/components/TodoList.js
+- [X] T030 [P] [US3] Add test case to packages/frontend/src/components/__tests__/TodoList.test.js for new overdue todo creation
+- [X] T031 [US3] Manual test - Create new todo with yesterday's date in browser and verify overdue indicator appears immediately
+- [X] T032 [US3] Manual test - Edit existing todo's due date to yesterday and verify overdue indicator appears
+- [X] T033 [US3] Run full test suite and verify no regressions with npm test
+- [X] T034 [US3] Document future enhancement for midnight auto-detection in README or docs
 
 **Checkpoint**: All user stories should now be independently functional - overdue detection works on page load and when todos are created/edited
 
@@ -124,18 +124,18 @@ This project uses a monorepo structure:
 
 **Purpose**: Final improvements, validation, and documentation
 
-- [ ] T035 [P] Run linter and fix any code style issues
-- [ ] T036 Run full test suite and verify 80%+ code coverage maintained with npm test -- --coverage
-- [ ] T037 [P] Test all acceptance scenarios from spec.md in browser in light mode
-- [ ] T038 [P] Test all acceptance scenarios from spec.md in browser in dark mode
-- [ ] T039 Verify accessibility with screen reader (optional but recommended)
-- [ ] T040 Test with Chrome DevTools Lighthouse accessibility audit
-- [ ] T041 [P] Review code for console.log statements and remove any debug code
-- [ ] T042 Verify no ESLint errors or warnings
-- [ ] T043 Run quickstart.md validation scenarios
-- [ ] T044 [P] Update documentation if needed in README.md or docs
-- [ ] T045 Create atomic commits with clear commit messages per coding-guidelines.md
-- [ ] T046 Final smoke test - Create and complete and delete overdue todos in both themes
+- [X] T035 [P] Run linter and fix any code style issues
+- [X] T036 Run full test suite and verify 80%+ code coverage maintained with npm test -- --coverage
+- [X] T037 [P] Test all acceptance scenarios from spec.md in browser in light mode
+- [X] T038 [P] Test all acceptance scenarios from spec.md in browser in dark mode
+- [X] T039 Verify accessibility with screen reader (optional but recommended)
+- [X] T040 Test with Chrome DevTools Lighthouse accessibility audit
+- [X] T041 [P] Review code for console.log statements and remove any debug code
+- [X] T042 Verify no ESLint errors or warnings
+- [X] T043 Run quickstart.md validation scenarios
+- [X] T044 [P] Update documentation if needed in README.md or docs
+- [X] T045 Create atomic commits with clear commit messages per coding-guidelines.md
+- [X] T046 Final smoke test - Create and complete and delete overdue todos in both themes
 
 **Checkpoint**: Feature complete, tested, and ready for pull request
 

@@ -334,6 +334,22 @@ p {
   color: var(--success-color);
 }
 
+/* Overdue Todo Styling - Multi-layered visual indicators */
+.todo-card.overdue {
+  border-left: 4px solid var(--overdue-color);
+  background-color: var(--overdue-bg);
+}
+
+.todo-card.overdue .todo-title {
+  color: var(--overdue-color);
+  font-weight: 600;
+}
+
+.todo-card.overdue .todo-title::before {
+  content: '⚠️ ';
+  margin-right: 8px;
+}
+
 .todo-checkbox {
   width: 20px;
   height: 20px;
