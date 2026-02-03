@@ -110,3 +110,87 @@ As a user, I expect the system to automatically detect when a todo becomes overd
 - Overdue status in browser tab title or favicon
 - Email reminders for overdue todos
 - Snooze or postpone functionality for overdue todos
+
+## Clarifications Needed
+
+### CL-001: Visual Indicator Design (Priority: HIGH)
+
+**Question**: What specific visual treatment should be used for overdue todo items?
+
+**Context**: The specification mentions "distinctive visual indicator (e.g., red text color or highlighted background)" and requires "additional visual cues (icons, borders, or typography) for accessibility" but doesn't prescribe the exact design.
+
+**Options**:
+- **Option A**: Red text color for due date only + title stays normal
+- **Option B**: Red accent color for due date + warning icon (⚠️) before due date + subtle red border on card
+- **Option C**: Coral/orange background tint on entire card + due date in danger color
+- **Option D**: Bold red text for entire title + due date shown in danger color
+
+**Recommendation**: Option B (red accent + icon + border)
+- **Rationale**: Provides multiple accessibility cues (color, icon, shape/border) meeting WCAG AA requirements for users with color vision deficiencies. Warning icon is universally recognized. Red border adds peripheral visual weight without overwhelming the interface. Aligns with Material Design error/warning patterns.
+
+**Decision Required Before**: Task T015 (Add overdue color variables to theme.css)
+
+**Impact if Deferred**: Implementation team will make ad-hoc design decision, potentially requiring rework if stakeholders disagree.
+
+---
+
+### CL-002: Dynamic Overdue Detection Mechanism (Priority: MEDIUM)
+
+**Question**: How should User Story 3 (Dynamic Overdue Detection) handle automatic detection when dates change at midnight?
+
+**Context**: User Story 3 states "system automatically detects when a todo becomes overdue as dates change (e.g., at midnight), without requiring a page refresh." The technical approach is not specified.
+
+**Options**:
+- **Option A**: Page load time comparison only (simplest - no continuous timers, requires page refresh to detect new overdue items after midnight)
+- **Option B**: Periodic polling with setInterval (check current date every 1 minute when app is active)
+- **Option C**: Single timer set to fire at next midnight boundary (most efficient but complex)
+- **Option D**: Defer to future iteration - deliver US1 and US2 only for MVP
+
+**Recommendation**: Option A for MVP, Option C for future enhancement
+- **Rationale**: Option A delivers 90% of value with zero complexity or battery impact. Most users refresh their todo app daily. Option C provides true "automatic" behavior but adds significant complexity for edge case (user has app open continuously across midnight). Option B wastes resources checking every minute when date changes are rare.
+
+**Decision Required Before**: Task T041 (Research React patterns for time-based re-rendering)
+
+**Impact if Deferred**: US3 implementation delayed or delivered with suboptimal approach. Team may waste time researching unnecessary complexity.
+
+---
+
+### CL-003: Success Criteria Measurement (Priority: LOW)
+
+**Question**: How will success criteria SC-001 (2-second identification) and SC-002 (95% usability success) be measured?
+
+**Context**: These are qualitative/usability metrics that cannot be validated through automated testing.
+
+**Options**:
+- **Option A**: Manual observation during T048-T049 (browser testing) for SC-001; document SC-002 as post-launch metric
+- **Option B**: Conduct formal usability testing session with 5-10 users before feature completion
+- **Option C**: Defer both to post-launch analytics and user feedback
+
+**Recommendation**: Option A (manual validation + post-launch tracking)
+- **Rationale**: SC-001 (2-second identification) can be subjectively validated during manual testing. SC-002 (95% success rate) requires actual user testing which is typically a post-launch activity. Both metrics are important for validation but don't block technical implementation.
+
+**Decision Required Before**: Phase 6 (Polish & Cross-Cutting Concerns)
+
+**Impact if Deferred**: Success metrics remain qualitative; feature ships without quantitative validation of user experience goals.
+
+---
+
+### CL-004: Visual Design Token Values (Priority: LOW)
+
+**Question**: What specific color values should be used for overdue indicators in light and dark themes?
+
+**Context**: Once CL-001 is resolved, specific hex/RGB values need to be defined for implementation.
+
+**Recommendation**: Based on existing theme.css analysis:
+- **Light Mode**: 
+  - `--color-overdue-text`: `#c62828` (red, danger color from coding-guidelines.md)
+  - `--color-overdue-border`: `#ef5350` (lighter red for subtle border)
+  - `--color-overdue-bg`: `#ffebee` (very light red tint, optional for Option C)
+- **Dark Mode**:
+  - `--color-overdue-text`: `#ef5350` (light red, danger color from coding-guidelines.md)
+  - `--color-overdue-border`: `#ff5252` (brighter red for visibility on dark)
+  - `--color-overdue-bg`: `#3a1f1f` (dark red tint, optional for Option C)
+
+**Decision Required Before**: Task T015-T016 (Add overdue color variables)
+
+**Impact if Deferred**: Developer will choose arbitrary red values that may not meet WCAG AA contrast requirements or align with existing theme colors.
