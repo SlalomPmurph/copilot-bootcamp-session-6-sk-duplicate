@@ -1,159 +1,143 @@
 # Tasks: Overdue Todo Items Identification
 
-**Input**: Design documents from `/specs/001-overdue-todos/`
-**Prerequisites**: plan.md ✅, spec.md ✅
+**Feature Branch**: `001-overdue-todos`  
+**Input**: Design documents from `/specs/001-overdue-todos/`  
+**Prerequisites**: plan.md ✅, spec.md ✅, research.md ✅, data-model.md ✅, contracts/ ✅, quickstart.md ✅
 
-**Tests**: Tests are included as this is a complete feature implementation requiring test coverage per constitution.
+**Tests**: Tests are included following TDD best practices as outlined in the testing guidelines and quickstart.md
 
 **Organization**: Tasks are grouped by user story to enable independent implementation and testing of each story.
 
-## Format: `[ID] [P?] [Story] Description`
+## Format: `- [ ] [ID] [P?] [Story?] Description`
 
+- **Checkbox**: `- [ ]` (markdown task list format)
+- **[ID]**: Task identifier (T001, T002, T003...)
 - **[P]**: Can run in parallel (different files, no dependencies)
-- **[Story]**: Which user story this task belongs to (e.g., US1, US2, US3)
+- **[Story]**: Which user story this task belongs to (US1, US2, US3)
 - Include exact file paths in descriptions
 
 ## Path Conventions
 
-**Web app**: `packages/backend/src/`, `packages/frontend/src/`
+This project uses a monorepo structure:
+- **Frontend**: `packages/frontend/src/`
+- **Backend**: `packages/backend/src/` (NO CHANGES for this feature)
+- **Tests**: Colocated in `__tests__/` directories
 
 ---
 
 ## Phase 1: Setup (Shared Infrastructure)
 
-**Purpose**: Project verification - ensure environment is ready for feature implementation
+**Purpose**: Project initialization and verification - ensure development environment is ready
 
-- [ ] T001 Verify current branch is `001-overdue-todos`
-- [ ] T002 Verify existing todo data model includes `dueDate`, `completed`, `title`, `id` fields
-- [ ] T003 [P] Review UI guidelines for overdue styling (light/dark theme colors)
+- [ ] T001 Verify Node.js v16+ and npm v7+ installed
+- [ ] T002 Verify all dependencies installed with npm install at repository root
+- [ ] T003 [P] Verify existing test suite passes with npm test
+- [ ] T004 [P] Checkout feature branch 001-overdue-todos
+
+**Checkpoint**: Development environment ready
 
 ---
 
 ## Phase 2: Foundational (Blocking Prerequisites)
 
-**Purpose**: Create reusable date utility that ALL user stories depend on
+**Purpose**: Core utilities and infrastructure that MUST be complete before ANY user story can be implemented
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T004 Create `packages/frontend/src/utils/` directory
-- [ ] T005 Create date utility file in `packages/frontend/src/utils/dateUtils.js` with `isOverdue()` function
-- [ ] T006 [P] Create test file in `packages/frontend/src/utils/__tests__/dateUtils.test.js`
-- [ ] T007 Write unit test: `isOverdue` returns false when dueDate is null
-- [ ] T008 Write unit test: `isOverdue` returns false when completed is true (regardless of date)
-- [ ] T009 Write unit test: `isOverdue` returns false when dueDate is today
-- [ ] T010 Write unit test: `isOverdue` returns false when dueDate is in the future
-- [ ] T011 Write unit test: `isOverdue` returns true when dueDate is yesterday and not completed
-- [ ] T012 Write unit test: `isOverdue` handles invalid date strings gracefully
-- [ ] T013 Implement `isOverdue(dueDate, completed)` function to pass all tests
-- [ ] T014 Run tests and verify 100% coverage for dateUtils.js
+- [ ] T005 Create packages/frontend/src/utils/dateUtils.js with isOverdue() function
+- [ ] T006 Create packages/frontend/src/utils/__tests__/dateUtils.test.js with comprehensive test cases
+- [ ] T007 Run unit tests for dateUtils.js and verify 100% code coverage
+- [ ] T008 Add overdue color variables to packages/frontend/src/styles/theme.css for light mode
+- [ ] T009 Add overdue color variables to packages/frontend/src/styles/theme.css for dark mode
+- [ ] T010 [P] Add .overdue CSS class with multi-layered indicators to packages/frontend/src/App.css
+- [ ] T011 Verify WCAG AA contrast ratios meet 4.5:1 requirement using WebAIM Contrast Checker
 
-**Checkpoint**: Foundation ready - user story implementation can now begin in parallel
+**Checkpoint**: Foundation ready - user story implementation can now begin
 
 ---
 
 ## Phase 3: User Story 1 - Visual Identification of Overdue Items (Priority: P1) 🎯 MVP
 
-**Goal**: Users can immediately identify overdue todos through clear visual indicators (red text/border) when viewing their todo list
+**Goal**: Users can immediately identify which tasks are overdue through clear visual indicators (red text, border, icon)
 
-**Independent Test**: Create todos with past due dates and verify they display with distinctive visual styling. Create todos with future dates or no dates and verify they do NOT show overdue styling.
-
-### Styling for User Story 1
-
-- [ ] T015 [P] [US1] Add overdue color variables to `packages/frontend/src/styles/theme.css` for light mode
-- [ ] T016 [P] [US1] Add overdue color variables to `packages/frontend/src/styles/theme.css` for dark mode
-- [ ] T017 [US1] Define `.todo-card.overdue` CSS class with border, text color, and icon styling
-- [ ] T018 [US1] Verify WCAG AA contrast standards for overdue colors in both themes
+**Independent Test**: Create todos with past due dates and verify they display with distinct visual treatment (different text color, border, and warning icon). Verify completed todos with past due dates do NOT show overdue indicators.
 
 ### Implementation for User Story 1
 
-- [ ] T019 [US1] Import `isOverdue` utility into `packages/frontend/src/components/TodoCard.js`
-- [ ] T020 [US1] Compute overdue status in TodoCard component using `isOverdue(todo.dueDate, todo.completed)`
-- [ ] T021 [US1] Apply conditional CSS class `overdue` to todo card when status is true
-- [ ] T022 [US1] Add visual overdue indicator icon (🔴 or ⏰) next to due date when overdue
+- [ ] T012 [P] [US1] Import isOverdue utility into packages/frontend/src/components/TodoCard.js
+- [ ] T013 [US1] Add overdue computation logic in packages/frontend/src/components/TodoCard.js using isOverdue(todo.dueDate, todo.completed)
+- [ ] T014 [US1] Apply conditional .overdue className to todo card in packages/frontend/src/components/TodoCard.js
+- [ ] T015 [P] [US1] Update packages/frontend/src/components/__tests__/TodoCard.test.js with overdue visual indicator tests
+- [ ] T016 [US1] Verify overdue todos display red text color in browser in light mode
+- [ ] T017 [US1] Verify overdue todos display warning icon before due date in browser
+- [ ] T018 [US1] Verify overdue todos display left border in browser in light mode
+- [ ] T019 [US1] Verify completed todos with past due dates do NOT show overdue indicator in browser
+- [ ] T020 [US1] Verify todos without due dates do NOT show overdue indicator in browser
+- [ ] T021 [US1] Test dark mode overdue visual indicators in browser
+- [ ] T022 [US1] Run full test suite and verify no regressions with npm test
 
-### Tests for User Story 1
-
-- [ ] T023 [P] [US1] Write test in `packages/frontend/src/components/__tests__/TodoCard.test.js`: renders overdue styling for past due date
-- [ ] T024 [P] [US1] Write test: does NOT render overdue styling for today's due date
-- [ ] T025 [P] [US1] Write test: does NOT render overdue styling for future due date
-- [ ] T026 [P] [US1] Write test: does NOT render overdue styling when completed (past due date)
-- [ ] T027 [P] [US1] Write test: does NOT render overdue styling when no due date
-- [ ] T028 [US1] Run TodoCard tests and verify all pass
-- [ ] T029 [P] [US1] Write integration test in `packages/frontend/src/components/__tests__/TodoList.test.js`: multiple todos with mixed due dates show correct overdue states
-- [ ] T030 [US1] Run TodoList tests and verify all pass
-
-**Checkpoint**: At this point, User Story 1 should be fully functional - overdue todos display with visual indicators
+**Checkpoint**: At this point, User Story 1 should be fully functional - todos with past due dates display overdue indicators, completed todos do not
 
 ---
 
 ## Phase 4: User Story 2 - Overdue Status Persistence (Priority: P2)
 
-**Goal**: When users mark an overdue todo as complete, the overdue indicator immediately disappears, providing instant feedback
+**Goal**: When a user marks an overdue todo as complete, the overdue visual indicator immediately disappears, providing instant feedback
 
-**Independent Test**: Create an overdue todo, mark it complete, verify overdue indicator disappears. Unmark it and verify indicator reappears.
-
-### Tests for User Story 2
-
-> **NOTE: Write these tests FIRST, ensure they FAIL before implementation**
-
-- [ ] T031 [P] [US2] Write test in `packages/frontend/src/components/__tests__/TodoCard.test.js`: overdue indicator disappears when marking todo complete
-- [ ] T032 [P] [US2] Write test: overdue indicator reappears when unmarking completed overdue todo
-- [ ] T033 [US2] Verify tests fail (not yet implemented)
+**Independent Test**: Create an overdue todo, mark it complete via checkbox/button, and verify the overdue indicator (red text, icon, border) is removed immediately. Then unmark it and verify indicator reappears.
 
 ### Implementation for User Story 2
 
-- [ ] T034 [US2] Verify TodoCard re-renders when `todo.completed` prop changes
-- [ ] T035 [US2] Verify `isOverdue` is re-computed on prop changes (React functional component should handle this automatically)
-- [ ] T036 [US2] Test completion toggle interaction manually in browser
-- [ ] T037 [US2] Run User Story 2 tests and verify all pass
+- [ ] T023 [US2] Verify TodoCard re-renders when completion status changes in packages/frontend/src/components/TodoCard.js
+- [ ] T024 [P] [US2] Add test case to packages/frontend/src/components/__tests__/TodoCard.test.js for completing overdue todo
+- [ ] T025 [P] [US2] Add test case to packages/frontend/src/components/__tests__/TodoCard.test.js for un-completing overdue todo
+- [ ] T026 [US2] Manual test - Create overdue todo in browser and mark complete and verify indicator disappears
+- [ ] T027 [US2] Manual test - Unmark completed overdue todo and verify indicator reappears
+- [ ] T028 [US2] Run full test suite and verify no regressions with npm test
 
-**Checkpoint**: At this point, User Stories 1 AND 2 should both work - overdue status updates instantly with completion changes
+**Checkpoint**: At this point, User Stories 1 AND 2 should both work - overdue status updates dynamically when completion status changes
 
 ---
 
 ## Phase 5: User Story 3 - Dynamic Overdue Detection (Priority: P3)
 
-**Goal**: System automatically detects when a todo becomes overdue as dates change (e.g., at midnight), without requiring page refresh
+**Goal**: System automatically detects when a todo becomes overdue as dates change or when new todos are created with past due dates
 
-**Independent Test**: Create a todo due today, verify it shows as overdue after date changes (test by manipulating date in tests)
+**Independent Test**: Create a todo with yesterday's date and verify it immediately shows as overdue without page refresh
 
-### Tests for User Story 3
-
-> **NOTE: This story requires mocking time/date for testing**
-
-- [ ] T038 [P] [US3] Write test in `packages/frontend/src/components/__tests__/TodoCard.test.js`: todo due today shows overdue when date advances to tomorrow (using mocked date)
-- [ ] T039 [P] [US3] Write test: newly created todo with past due date shows overdue immediately
-- [ ] T040 [US3] Verify tests fail (not yet implemented)
+**Note**: Per research.md CL-002, full midnight auto-detection (Option C) is deferred to future iteration. MVP delivers Option A (page load time comparison).
 
 ### Implementation for User Story 3
 
-- [ ] T041 [US3] Research React patterns for time-based re-rendering (useEffect with interval or date context)
-- [ ] T042 [US3] Implement date change detection mechanism (optional: interval checking or accept page refresh as acceptable)
-- [ ] T043 [US3] Verify newly created todos compute overdue status immediately
-- [ ] T044 [US3] Run User Story 3 tests and verify all pass
-- [ ] T045 [US3] Document behavior: automatic detection requires page refresh or periodic checking
+- [ ] T029 [US3] Verify newly created todo with past due date shows overdue indicator immediately in packages/frontend/src/components/TodoList.js
+- [ ] T030 [P] [US3] Add test case to packages/frontend/src/components/__tests__/TodoList.test.js for new overdue todo creation
+- [ ] T031 [US3] Manual test - Create new todo with yesterday's date in browser and verify overdue indicator appears immediately
+- [ ] T032 [US3] Manual test - Edit existing todo's due date to yesterday and verify overdue indicator appears
+- [ ] T033 [US3] Run full test suite and verify no regressions with npm test
+- [ ] T034 [US3] Document future enhancement for midnight auto-detection in README or docs
 
-**Note**: Full automatic detection (midnight boundary) may be deferred if complexity is high. Immediate detection on creation and completion changes (US1 + US2) delivers 90% of value.
-
-**Checkpoint**: All user stories should now be independently functional
+**Checkpoint**: All user stories should now be independently functional - overdue detection works on page load and when todos are created/edited
 
 ---
 
 ## Phase 6: Polish & Cross-Cutting Concerns
 
-**Purpose**: Final improvements and validation
+**Purpose**: Final improvements, validation, and documentation
 
-- [ ] T046 [P] Run full test suite (`npm test`) and verify all tests pass
-- [ ] T047 [P] Check test coverage meets 80%+ requirement (`npm test -- --coverage`)
-- [ ] T048 Manually test overdue indicators in browser (light theme)
-- [ ] T049 Manually test overdue indicators in browser (dark theme)
-- [ ] T050 Verify accessibility: test with color-blind simulation tools
-- [ ] T051 Verify keyboard navigation works with overdue todos
-- [ ] T052 Run ESLint and fix any warnings (`npm run lint` if available)
-- [ ] T053 Remove any console.log statements from implementation
-- [ ] T054 [P] Update documentation if needed (optional for this feature)
-- [ ] T055 Final code review: verify DRY principle, single responsibility, SOLID principles
-- [ ] T056 Commit all changes with clear commit message: "feat: add overdue visual indicators for todo items"
+- [ ] T035 [P] Run linter and fix any code style issues
+- [ ] T036 Run full test suite and verify 80%+ code coverage maintained with npm test -- --coverage
+- [ ] T037 [P] Test all acceptance scenarios from spec.md in browser in light mode
+- [ ] T038 [P] Test all acceptance scenarios from spec.md in browser in dark mode
+- [ ] T039 Verify accessibility with screen reader (optional but recommended)
+- [ ] T040 Test with Chrome DevTools Lighthouse accessibility audit
+- [ ] T041 [P] Review code for console.log statements and remove any debug code
+- [ ] T042 Verify no ESLint errors or warnings
+- [ ] T043 Run quickstart.md validation scenarios
+- [ ] T044 [P] Update documentation if needed in README.md or docs
+- [ ] T045 Create atomic commits with clear commit messages per coding-guidelines.md
+- [ ] T046 Final smoke test - Create and complete and delete overdue todos in both themes
+
+**Checkpoint**: Feature complete, tested, and ready for pull request
 
 ---
 
@@ -165,54 +149,50 @@
 - **Foundational (Phase 2)**: Depends on Setup completion - BLOCKS all user stories
 - **User Stories (Phase 3-5)**: All depend on Foundational phase completion
   - User stories can then proceed in parallel (if staffed)
-  - Or sequentially in priority order (P1 → P2 → P3)
+  - Or sequentially in priority order (US1 → US2 → US3)
 - **Polish (Phase 6)**: Depends on all desired user stories being complete
 
 ### User Story Dependencies
 
-- **User Story 1 (P1)**: Can start after Foundational (Phase 2) - No dependencies on other stories
-- **User Story 2 (P2)**: Can start after Foundational (Phase 2) - Builds on US1 but independently testable
-- **User Story 3 (P3)**: Can start after Foundational (Phase 2) - Builds on US1 but independently testable
+- **User Story 1 (P1)**: Depends on Foundational (Phase 2) - No dependencies on other stories
+- **User Story 2 (P2)**: Depends on Foundational (Phase 2) and User Story 1 (leverages same visual indicators)
+- **User Story 3 (P3)**: Depends on Foundational (Phase 2) and User Story 1 (leverages same overdue computation)
 
 ### Within Each User Story
 
-- Styling tasks before implementation tasks
-- Tests should be written alongside or before implementation
-- Implementation before manual testing
-- All tasks complete before moving to next priority
+- Import utility before using it
+- Add computation logic before applying CSS classes
+- Update component before updating tests
+- Automated tests before manual browser testing
+- Light mode verification before dark mode verification
 
 ### Parallel Opportunities
 
-- All Setup tasks marked [P] can run in parallel
-- All Foundational test tasks (T007-T012) can be written in parallel
-- All styling tasks for US1 (T015-T016) can run in parallel
-- All test tasks within each user story marked [P] can run in parallel
-- Different user stories can be worked on in parallel by different team members after Phase 2
-- Polish tasks (T046-T047, T054-T055) can run in parallel
+- **Phase 1**: Tasks T003 and T004 can run in parallel
+- **Phase 2**: Task T010 can run in parallel with T008-T009 (different files)
+- **Phase 3 (US1)**: Tasks T012 and T015 can run in parallel (different files - component vs test)
+- **Phase 4 (US2)**: Tasks T024 and T025 can run in parallel (different test cases)
+- **Phase 5 (US3)**: Task T030 can run in parallel with T029
+- **Phase 6**: Tasks T035, T037, T038, T041, T044 can run in parallel (different files/activities)
 
 ---
+
+## Parallel Example: Foundational Phase
+
+```bash
+# After completing T005-T007 sequentially, these can run together:
+Task T008: Add overdue color variables for light mode
+Task T009: Add overdue color variables for dark mode
+# Then:
+Task T010: Add .overdue CSS class (different file than T008-T009)
+```
 
 ## Parallel Example: User Story 1
 
 ```bash
-# After Foundational phase is complete, all of these can run in parallel:
-
-# Developer 1: Styling
-Task T015: Add overdue colors (light mode)
-Task T016: Add overdue colors (dark mode)
-
-# Developer 2: Tests
-Task T023: Test renders overdue styling for past due date
-Task T024: Test does NOT render overdue for today
-Task T025: Test does NOT render overdue for future
-Task T026: Test does NOT render overdue when completed
-Task T027: Test does NOT render overdue when no due date
-
-# Then sequentially:
-Task T017: Define CSS class
-Task T018: Verify WCAG standards
-Task T019-T022: Implementation
-Task T028-T030: Run tests
+# After T012-T014 complete, these can run together:
+Task T012: Import isOverdue utility in TodoCard.js
+Task T015: Update TodoCard.test.js with tests (different file)
 ```
 
 ---
@@ -221,54 +201,82 @@ Task T028-T030: Run tests
 
 ### MVP First (User Story 1 Only)
 
-1. Complete Phase 1: Setup
-2. Complete Phase 2: Foundational (CRITICAL - blocks all stories)
-3. Complete Phase 3: User Story 1
-4. **STOP and VALIDATE**: Test User Story 1 independently
-5. Deploy/demo if ready - users can now identify overdue todos visually
+1. Complete Phase 1: Setup (T001-T004)
+2. Complete Phase 2: Foundational (T005-T011) - CRITICAL, blocks all stories
+3. Complete Phase 3: User Story 1 (T012-T022)
+4. **STOP and VALIDATE**: Test User Story 1 independently with real todos
+5. Optional: Deploy/demo if ready
+6. Estimated time: 2-3 hours
 
 ### Incremental Delivery
 
-1. Complete Setup + Foundational → Foundation ready (date utilities working)
-2. Add User Story 1 → Test independently → Deploy/Demo (MVP! - visual identification working)
-3. Add User Story 2 → Test independently → Deploy/Demo (completion handling working)
-4. Add User Story 3 (OPTIONAL) → Test independently → Deploy/Demo (automatic detection working)
-5. Each story adds value without breaking previous stories
-
-### Recommended Approach
-
-**Minimum Viable**: Complete P1 (User Story 1) only
-- Delivers core value: users can see overdue todos
-- Simplest implementation
-- Lowest risk
-
-**Full Feature**: Complete P1 + P2
-- P1 gives visual identification
-- P2 ensures state synchronization on user actions
-- P3 (automatic detection) can be deferred as it requires page refresh workaround
+1. Complete Setup + Foundational → Foundation ready (T001-T011)
+2. Add User Story 1 → Test independently → Deploy/Demo (T012-T022) - **MVP!**
+3. Add User Story 2 → Test independently → Deploy/Demo (T023-T028)
+4. Add User Story 3 → Test independently → Deploy/Demo (T029-T034)
+5. Polish → Final validation (T035-T046)
+6. Each story adds value without breaking previous stories
+7. Total estimated time: 3-4 hours including polish
 
 ### Parallel Team Strategy
 
 With multiple developers:
 
-1. Team completes Setup + Foundational together (Tasks T001-T014)
+1. Team completes Setup + Foundational together (T001-T011)
 2. Once Foundational is done:
-   - Developer A: User Story 1 (Tasks T015-T030)
-   - Developer B: User Story 2 (Tasks T031-T037) - may need to wait for US1 completion
-   - Developer C: User Story 3 (Tasks T038-T045) - may need to wait for US1 completion
-3. All converge on Polish phase (Tasks T046-T056)
-
-**Note**: Due to dependencies on US1 implementation, sequential execution P1→P2→P3 is recommended for this feature.
+   - Developer A: User Story 1 (T012-T022)
+   - Developer B: Can start User Story 2 tests in parallel (T024-T025 while waiting for T012-T014)
+   - Developer C: Can work on Polish tasks like documentation (T044)
+3. Stories complete and integrate independently
 
 ---
 
 ## Notes
 
-- [P] tasks = different files, no dependencies within that phase
-- [Story] label maps task to specific user story for traceability
+- **[P] tasks**: Different files, no dependencies - can run in parallel
+- **[Story] label**: Maps task to specific user story for traceability
+- **No backend changes**: This is a frontend-only feature (per research.md and contracts/)
+- **Tests included**: Following TDD best practices per testing-guidelines.md
 - Each user story should be independently completable and testable
-- Verify tests fail before implementing (TDD approach)
-- Commit after each phase or logical group of tasks
+- Commit after each task or logical group per coding-guidelines.md
 - Stop at any checkpoint to validate story independently
-- Total tasks: 56 (14 foundational + 16 US1 + 7 US2 + 8 US3 + 11 polish)
-- Estimated parallel opportunities: ~15 tasks can run concurrently within phases
+- **WCAG AA compliance**: Critical for visual indicators (FR-008)
+- **MVP = User Story 1**: Delivers core value (visual identification of overdue items)
+- **Deferred**: Midnight auto-detection timer (US3, Option C from CL-002) - document for future
+- Total tasks: 46 (11 foundational + 11 US1 + 6 US2 + 6 US3 + 12 polish)
+- Estimated parallel opportunities: ~12 tasks can run concurrently within phases
+
+---
+
+## Acceptance Scenarios Coverage
+
+### User Story 1 (Phase 3)
+- ✅ AS1.1: Overdue todo displays with distinctive visual indicator (T016-T018)
+- ✅ AS1.2: Multiple todos with only overdue showing indicator (T016-T022)
+- ✅ AS1.3: Today's due date NOT overdue (verified in dateUtils tests T006-T007)
+- ✅ AS1.4: Completed overdue todo does NOT show indicator (T019)
+- ✅ AS1.5: Todo without due date does NOT show indicator (T020)
+
+### User Story 2 (Phase 4)
+- ✅ AS2.1: Marking overdue todo complete removes indicator (T026)
+- ✅ AS2.2: Unmarking completed overdue todo shows indicator again (T027)
+
+### User Story 3 (Phase 5)
+- ✅ AS3.1: Midnight transition (documented as future enhancement - T034)
+- ✅ AS3.2: New todo with past due date shows indicator immediately (T031)
+
+### Edge Cases (validated throughout)
+- ✅ Invalid dates: Handled in dateUtils.js (T005-T007)
+- ✅ Far past dates: Same treatment as recent past (T006)
+- ✅ Completion after due date: Indicator disappears (T026)
+- ✅ Date boundaries: Date-only comparison in dateUtils (T006-T007)
+
+---
+
+## Success Criteria Validation
+
+- **SC-001** (2-second identification): Validated manually in T016-T021 browser tests
+- **SC-002** (95% usability success): Post-launch metric, documented in T044
+- **SC-003** (100ms update): Browser re-render is instantaneous, validated in T026-T027
+- **SC-004** (WCAG AA): Validated with contrast checker in T011, browser audit in T040
+- **SC-005** (Light/dark modes): Explicitly tested in T021, T038
